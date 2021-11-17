@@ -20,11 +20,13 @@
     "baseUrl": "https://github.com/github_account/react-native-etherjs"
   },
   "keywords": [
-    "react-native"
+    "react-native",
+    "react-native-etherjs",
+    "react-native-etherjs-wallet"
   ],
   "author": {
-    "name": "Your Name",
-    "email": "yourname@email.com"
+    "name": "Phu Le",
+    "email": "phule.macos@gmail.com"
   },
   "license": "MIT",
   "licenseFilename": "LICENSE",

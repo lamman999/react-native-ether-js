@@ -2,6 +2,7 @@
 
 package com.reactlibrary;
 
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -27,7 +28,7 @@ public class ReactNativeEtherjsModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void fromMnemonic(String mnemonic, Callback callback) {
+    public void fromMnemonic(String mnemonic, Promise promise) {
         String password = null; // no encryption
         //Derivation path wanted: // m/44'/60'/0'/0
         int[] derivationPath = {44 | Bip32ECKeyPair.HARDENED_BIT, 60 | Bip32ECKeyPair.HARDENED_BIT, 0 | Bip32ECKeyPair.HARDENED_BIT, 0,0};
@@ -48,7 +49,7 @@ public class ReactNativeEtherjsModule extends ReactContextBaseJavaModule {
         WritableNativeMap map = new WritableNativeMap();
         map.putBoolean("success",true);
         map.putMap("wallet",wallet);
-        callback.invoke(map);
+        promise.resolve(map);
     }
 
 }
