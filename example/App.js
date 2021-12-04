@@ -12,43 +12,19 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import ReactNativeEtherjs from 'react-native-etherjs';
 
-export default class App extends Component<{}> {
+export default class App extends Component{
   state = {
     status: 'starting',
     message: '--'
   };
-  componentDidMount() {
-    ReactNativeEtherjs.fromMnemonic('candy maple cake sugar pudding cream honey rich smooth crumble sweet treat', (wallet) => {
-        console.log(wallet)
-    });
+  async componentDidMount() {
+    const wallet = await ReactNativeEtherjs.fromMnemonic('man comfort firm depend crowd when tuna soon license mass heart extra');
+    console.log(wallet);
   }
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>☆ReactNativeEtherjs example☆</Text>
-        <Text style={styles.instructions}>STATUS: {this.state.status}</Text>
-        <Text style={styles.welcome}>☆NATIVE CALLBACK MESSAGE☆</Text>
-        <Text style={styles.instructions}>{this.state.message}</Text>
+      <View>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});

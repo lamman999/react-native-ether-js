@@ -10,6 +10,7 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.WritableNativeMap;
 
 import org.web3j.crypto.Bip32ECKeyPair;
+import org.web3j.crypto.Bip44WalletUtils;
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.MnemonicUtils;
 
@@ -30,17 +31,13 @@ public class ReactNativeEtherjsModule extends ReactContextBaseJavaModule {
     @ReactMethod
     public void fromMnemonic(String mnemonic, Promise promise) {
         String password = null; // no encryption
-        //Derivation path wanted: // m/44'/60'/0'/0
-        int[] derivationPath = {44 | Bip32ECKeyPair.HARDENED_BIT, 60 | Bip32ECKeyPair.HARDENED_BIT, 0 | Bip32ECKeyPair.HARDENED_BIT, 0,0};
-
         // Generate a BIP32 master keypair from the mnemonic phrase
         Bip32ECKeyPair masterKeypair = Bip32ECKeyPair.generateKeyPair(MnemonicUtils.generateSeed(mnemonic, password));
 
-        // Derived the key using the derivation path
-        Bip32ECKeyPair  derivedKeyPair = Bip32ECKeyPair.deriveKeyPair(masterKeypair, derivationPath);
+        Bip32ECKeyPair bip44Keypair = Bip44WalletUtils.generateBip44KeyPair(masterKeypair);
 
         // Load the wallet for the derived key
-        Credentials credentials = Credentials.create(derivedKeyPair);
+        Credentials credentials = Credentials.create(bip44Keypair);
 
         WritableNativeMap wallet = new WritableNativeMap();
         wallet.putString("address",credentials.getAddress());
